@@ -2,19 +2,59 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-        <title>Jumpydoll Spring Boot app</title>
+        <link href="/ptcgo-check-api/style.css" rel="stylesheet" />
+        <script src="/ptcgo-check-api/index.js"></script>
+        <title>PTCGO code checker</title>
     </head>
     <body>
         <div class="container">
-            <h2 class="text-center mt-2">Welcome to your new Express app</h2>
-            To start building, check out our quick start guide below:
-            <ul>
+            <h2 class="text-center mt-2">Pokemon TCG code checker</h2>
+            <p class="lead">
+                This is a simple service that checks Pokemon TCG codes. It proxies to the pokemon.com service to get the values, but
+                uses an easier to use API and without any CORS restrictions so other websites can retrieve the information.
+            </p>
+
+            <p>
+                This service requires a Pokemon.com account to look up the code. You'll need to retrieve your account cookies using the steps below.
+            </p>
+
+            <ol>
                 <li>
-                    <a href="https://jumpydoll.com/docs/quickstart/nodejs" target="_blank" rel="noreferrer noopener">
-                        Quick start guide
-                    </a>
+                    In a desktop Chrome browser, go to <a href="https://pokemon.com/redeem" target="_blank">https://pokemon.com/redeem</a> and log in.
                 </li>
-            </ul>
+                <li>
+                    Complete the Captcha.
+                </li>
+                <li>
+                    Paste in a random string ("test" for example) and verify the code.
+                </li>
+                <li>
+                    Click on the lock on the left of the address bar and click "Cookies".
+                </li>
+                <li>
+                    Expand www.pokemon.com &gt; Cookies and click on op_session_id.
+                </li>
+                <li>
+                    Copy the value of "Content" and paste it below.
+                </li>
+            </ol>
+            <form id="cookieForm">
+                <div class="mb-3">
+                    <label for="cookieInput" class="form-label">Paste the value of op_session_id below.</label>
+                    <input type="input" class="form-control" id="cookieInput" />
+                </div>
+                <button id="cookieSubmitButton" class="btn btn-primary" type="submit">Continue</button>
+            </form>
+            <form id="codeForm" style="display:none">
+                <div class="mb-3">
+                    <label for="codeInput" class="form-label">Paste the list of codes below (one code per line).</label>
+                    <textarea type="input" class="form-control" id="codeInput" rows="8"></textarea>
+                </div>
+                <button id="codeSubmitButton" class="btn btn-primary" type="submit">Submit</button>
+            </form>
+            <div id="submissions">
+
+            </div>
         </div>
     </body>
 </html>

@@ -8,6 +8,12 @@ const fetch = require('node-fetch');
 router.get('/code', async (req, res) => {
   const code = req.query.code;
   const session_id = req.query.session_id;
+  if (!session_id) {
+    res.statusCode=403;
+    res.set('Access-Control-Allow-Origin', '*');
+    res.send('{"detail": "Authentication credentials were not provided."}');
+    return;
+  }
   console.log(code, session_id);
   const headers = {
     cookie: `django_language=en; op_session_id=${session_id}; ga-client-id=undefined`,
